@@ -6,7 +6,7 @@ domain=previews.sofatutor.de
 ttl=432000
 
 # default IP address for non-wildcard entries
-ipaddress=3.69.31.132
+ipaddress=3.68.62.12
 
 # SOA
 [soa]
@@ -19,8 +19,8 @@ ns=ns1.previews.sofatutor.de
 
 # nameservers
 [nameservers]
-ns1.previews.sofatutor.de=3.69.31.132
-ns2.previews.sofatutor.de=3.69.31.132
+ns1.previews.sofatutor.de=3.68.62.12
+ns2.previews.sofatutor.de=3.68.62.12
 
 [additional_cnames]
 _acme-challenge=xyz.auth.previews.sofatutor.de.
