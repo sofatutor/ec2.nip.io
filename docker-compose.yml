@@ -1,0 +1,9 @@
+version: '3.6'
+
+services:
+  ntpio:
+    container_name: ntpio
+    build: .
+    ports:
+    - "53:53/udp"
+    - "53:53/tcp"
