@@ -16,7 +16,7 @@ jobs:
       - uses: pullpreview/action@v5
         with:
           admins: mfittko
-          always_on: main
+          always_on: master
           app_path: .
           instance_type: nano_2_0
           dns: previews.sofatutor.de
