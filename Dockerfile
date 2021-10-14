@@ -1,4 +1,5 @@
 FROM bitnami/minideb:latest
+
 RUN install_packages python pdns-server pdns-backend-pipe curl jq
 ADD src/backend.conf.example /usr/local/bin/backend.conf
 ADD src/nip.py /usr/local/bin/nip
