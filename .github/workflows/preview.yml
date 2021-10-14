@@ -1,0 +1,29 @@
+name: preview
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [labeled, unlabeled, synchronize, closed, reopened]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-20.04
+    if: github.event_name == 'push' || github.event.label.name == 'preview' || contains(github.event.pull_request.labels.*.name, 'preview')
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v2
+      - uses: pullpreview/action@v5
+        with:
+          admins: mfittko
+          always_on: main
+          app_path: .
+          instance_type: nano_2_0
+          dns: previews.sofatutor.de
+          ports: 53/tcp,53/udp
+          registries: docker://index.docker.io/v1
+          compose_files: docker-compose.yml
+        env:
+          AWS_REGION: eu-central-1
+          AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
+          AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
