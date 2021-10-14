@@ -1,6 +1,6 @@
 [main]
 # main domain
-domain=example.com
+domain=previews.sofatutor.de
 
 # default ttl
 ttl=432000
@@ -14,19 +14,19 @@ ipaddress=127.0.0.1
 # serial number
 id=1
 # Hostmaster email address
-hostmaster=hostmaster@example.com
+hostmaster=hostmaster@previews.sofatutor.de
 # Name server
-ns=ns1.example.com
+ns=ns1.previews.sofatutor.de
 
 
 # nameservers
 [nameservers]
-ns1.example.com=127.0.0.1
-ns2.example.com=127.0.0.1
+ns1.previews.sofatutor.de=127.0.0.1
+ns2.previews.sofatutor.de=127.0.0.1
 
 [additional_cnames]
-_acme-challenge=xyz.auth.example.com.
-www=business.example.com
+_acme-challenge=xyz.auth.previews.sofatutor.de.
+www=www.previews.sofatutor.de
 
 [whitelist]
 loopback = 127.0.0.0/8
