@@ -63,7 +63,6 @@ class DynamicBackend:
         self.ttl = ''
         self.name_servers = {}
         self.additional_cnames = {}
-        self.whitelisted_ranges = []
 
     def configure(self):
         fname = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'backend.conf')
@@ -97,14 +96,12 @@ class DynamicBackend:
             self.additional_cnames[name] = entry[1]
             log('add static CNAME: %s = %s' % (entry[0], entry[1]))
 
-        self.whitelisted_ranges = config.items("whitelist") if config.has_section("whitelist") else []
         log('Name servers: %s' % self.name_servers)
         log('ID: %s' % self.id)
         log('TTL %s' % self.ttl)
         log('SOA: %s' % self.soa)
         log('IP Address: %s' % self.ip_address)
         log('DOMAIN: %s' % self.domain)
-        log('Whitelisted: %s' % self.whitelisted_ranges)
 
     def run(self):
         log('starting up')
@@ -160,11 +157,6 @@ class DynamicBackend:
         ipaddress = re.split('[-.]', match[0])
         if DEBUG:
             log('ip: %s' % ipaddress)
-
-        if self.whitelisted_ranges and not any(ip_address in ip_range for ip_range in self.whitelisted_ranges):
-            self.handle_not_whitelisted(ip_address)
-            return
-
         for part in ipaddress:
             if re.match('^\d{1,3}$', part) is None:
                 if DEBUG:
