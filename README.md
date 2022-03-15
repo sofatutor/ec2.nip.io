@@ -1,6 +1,6 @@
 # Fork of nip.io
 
-This is a fork of http://nip.io with some neat changes.
+This is a fork of http://nip.io with some neat changes...
 
 ## About
 
