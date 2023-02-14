@@ -13,7 +13,7 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v2
-      - uses: pullpreview/action@v5
+      - uses: sofatutor/pullpreview@master
         with:
           admins: mfittko
           always_on: master
