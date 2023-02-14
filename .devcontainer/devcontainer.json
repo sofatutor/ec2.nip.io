@@ -1,0 +1,21 @@
+{
+  "name": "PowerDNS Python Backend Dev Container",
+  "dockerFile": "Dockerfile",
+  "extensions": [
+    "ms-python.python",
+    "amazonwebservices.aws-toolkit-vscode",
+    "ms-python.pylance-release",
+    "ms-python.vscode-pylance",
+    "gmemstr.cloudformation",
+    "ms-python.python-testing",
+    "ms-python.linting-flake8",
+    "ms-vsliveshare.vsliveshare",
+  ],
+  "mounts": [
+    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
+  ],
+  "postCreateCommand": "apt-get update && apt-get install -y git && ( curl -fsSL https://get.docker.com | sh )",
+  "remoteEnv": {
+      "GIT_SSL_NO_VERIFY": "1"
+  }
+}

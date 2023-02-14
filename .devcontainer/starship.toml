@@ -1,0 +1,4 @@
+format = "🐳 $all"
+
+[container]
+disabled = true
