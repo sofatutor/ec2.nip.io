@@ -1,6 +1,6 @@
 [main]
 # main domain
-domain=previews.sofatutor.de
+domain=p.sofatutor-sandbox.de
 
 # default ttl
 ttl=432000
@@ -13,9 +13,9 @@ ipaddress=3.71.243.88
 # serial number
 id=1
 # Hostmaster email address
-hostmaster=hostmaster@previews.sofatutor.de
+hostmaster=hostmaster@p.sofatutor-sandbox.de
 # Name server
-ns=ns1.previews.sofatutor.de
+ns=ns1.p.sofatutor-sandbox.de
 refresh=10800
 retry=3600
 expire=604800
@@ -23,12 +23,12 @@ minimum=3600
 
 # nameservers
 [nameservers]
-ns1.previews.sofatutor.de=3.71.243.88
-ns2.previews.sofatutor.de=3.71.243.88
+ns1.p.sofatutor-sandbox.de=3.71.243.88
+ns2.p.sofatutor-sandbox.de=3.71.243.88
 
 [additional_cnames]
-_acme-challenge=xyz.auth.previews.sofatutor.de.
-www=www.previews.sofatutor.de
+_acme-challenge=xyz.auth.p.sofatutor-sandbox.de.
+www=www.p.sofatutor-sandbox.de
 
 [whitelist]
 loopback = 127.0.0.0/8
