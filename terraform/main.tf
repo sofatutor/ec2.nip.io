@@ -7,7 +7,7 @@ provider "aws" {
 
 
 # Create a VPC and subnets
-resource "aws_vpc" "ecs_vpc" {
+resource "aws_vpc" "trialday_vpc" {
   cidr_block = "10.0.0.0/16"
   tags = {
     Name = "ecs-vpc"
@@ -16,8 +16,8 @@ resource "aws_vpc" "ecs_vpc" {
 
 
 resource "aws_subnet" "ecs_subnet_a" {
-  vpc_id     = aws_vpc.ecs_vpc.id
-  cidr_block = "10.0.1.0/24"
+  vpc_id     = aws_vpc.trialday_vpc.id
+  cidr_block = "10.0.4.0/24"
   availability_zone = "us-east-1a"
   tags = {
     Name = "ecs-subnet-a"
@@ -25,8 +25,8 @@ resource "aws_subnet" "ecs_subnet_a" {
 }
 
 resource "aws_subnet" "ecs_subnet_b" {
-  vpc_id     = aws_vpc.ecs_vpc.id
-  cidr_block = "10.0.2.0/24"
+  vpc_id     = aws_vpc.trialday_vpc.id
+  cidr_block = "10.0.3.0/24"
   availability_zone = "us-east-1b"
   tags = {
     Name = "ecs-subnet-b"
@@ -42,12 +42,11 @@ resource "aws_internet_gateway" "trialday_igw" {
 }
 
 resource "aws_internet_gateway_attachment" "trialday_attachment" {
-  internet_gateway_id = aws_internet_gateway.trialday_igw.id
+  count = 0  
   vpc_id              = aws_vpc.trialday_vpc.id
+  internet_gateway_id = aws_internet_gateway.trialday_igw.id
+  
 }
-
-
-
 
 
 
@@ -73,7 +72,7 @@ resource "aws_route_table_association" "trialday_association" {
 # Create a security group for the ALB
 resource "aws_security_group" "alb_sg" {
   name_prefix = "alb_sg"
-  vpc_id = aws_vpc.ecs_vpc.id
+  vpc_id = aws_vpc.trialday_vpc.id
 
   ingress {
     from_port = 80
@@ -108,7 +107,7 @@ resource "aws_lb_target_group" "ecs_tg" {
   name     = "ecs-target-group"
   port     = 80
   protocol = "HTTP"
-  vpc_id   = aws_vpc.ecs_vpc.id
+  vpc_id   = aws_vpc.trialday_vpc.id
 
   health_check {
     path = "/"
@@ -197,19 +196,30 @@ resource "aws_ecs_cluster" "trialday_cluster" {
 # Create a task definition for the ECS task
 resource "aws_ecs_task_definition" "trialday_task_definition" {
   family                   = "trialday-task"
-  container_definitions    = jsonencode(var.container_definitions)
-  task_role_arn            = aws_iam_role.ecs_task_execution_role.arn
+  container_definitions    = jsonencode([
+    {
+      name            = "my-container"
+      image           = "nginx:latest"
+      portMappings    = [
+        {
+          containerPort = 80
+          protocol      = "tcp"
+        }
+      ]
+    }
+  ])
+ 
+      cpu             = 256
+      memory          = 1024
+  requires_compatibilities = [
+    "FARGATE"
+  ]
+  network_mode             = "awsvpc"
   execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
-  requires_compatibilities = ["FARGATE"]
 
-  network_mode = "awsvpc"
-  cpu          = 256
-  memory       = 512
-
-  tags = {
-    Name = "trialday-task"
-  }
 }
+
+
 
 
 # Create an ECS service
@@ -225,13 +235,14 @@ resource "aws_ecs_service" "trialday_service" {
 
   network_configuration {
     security_groups = [aws_security_group.trialday_sg.id]
-    subnets         = aws_subnet.private.*.id
+    subnets         = aws_subnet.ecs_subnet_a.*.id
   }
 }
 
 # Create a security group for the task
 resource "aws_security_group" "trialday_sg" {
   name_prefix = "trialday-sg"
+  vpc_id = aws_vpc.trialday_vpc.id
 
   ingress {
     from_port = 80
@@ -253,21 +264,6 @@ resource "aws_subnet" "public" {
   }
 }
 
-# Create a private subnet
-resource "aws_subnet" "private" {
-  cidr_block = "10.0.2.0/24"
-  vpc_id     = aws_vpc.trialday_vpc.id
 
-  tags = {
-    Name = "private"
-  }
-}
 
-# Create a VPC
-resource "aws_vpc" "trialday_vpc" {
-  cidr_block = "10.0.0.0/16"
 
-  tags = {
-    Name = "trialday-vpc"
-  }
-}
