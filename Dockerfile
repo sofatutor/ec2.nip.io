@@ -16,4 +16,4 @@ RUN add_ec2_ip_ranges.sh
 
 EXPOSE 53/udp 53/tcp
 
-CMD ["pdns_server", "--master", "--daemon=no", "--local-address=0.0.0.0", "--config-dir=/etc/pdns/"]
+CMD ["envsubst < backend.conf.example > /usr/local/bin/backend.conf", "&&", "pdns_server", "--master", "--daemon=no", "--local-address=0.0.0.0", "--config-dir=/etc/pdns/"]
