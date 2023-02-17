@@ -15,7 +15,8 @@ RUN apt-get update && apt-get install -y \
     python3-pip \
     zsh \
     awscli \
-    software-properties-common
+    software-properties-common \
+    dnsutils
 
 # Install starship prompt
 RUN sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --force \
