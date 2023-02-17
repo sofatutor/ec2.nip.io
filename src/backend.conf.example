@@ -23,8 +23,8 @@ minimum=3600
 
 # nameservers
 [nameservers]
-ns1.$DOMAIN=$IP
-# ns2.$DOMAIN=$IP_2
+# ns1.$DOMAIN=$IP
+ns2.$DOMAIN=$IP
 
 [additional_cnames]
 _acme-challenge=xyz.auth.$DOMAIN.
