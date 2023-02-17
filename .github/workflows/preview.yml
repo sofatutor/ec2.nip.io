@@ -9,6 +9,7 @@ on:
 
 env:
   DNS: 'p.sofatutor-sandbox.de'
+  ID: '1'
 
 jobs:
   deploy:
@@ -36,7 +37,7 @@ jobs:
           compose_files: docker-compose.yml
         env:
           AWS_REGION: eu-central-1
-          PULLPREVIEW_ENV_VARS: IP="$(ec2-metadata | grep public-ipv4 | cut -d ' ' -f2)",DOMAIN=${{ env.DNS }}
+          PULLPREVIEW_ENV_VARS: IP="$(ec2-metadata | grep public-ipv4 | cut -d ' ' -f2)",DOMAIN=${{ env.DNS }},ID=${{ env.ID }}
           PULLPREVIEW_LAUNCH_COMMAND: docker-compose up -d --build --force-recreate
           AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
           AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"

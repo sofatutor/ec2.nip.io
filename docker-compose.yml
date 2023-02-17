@@ -7,6 +7,7 @@ services:
       context: .
     restart: always
     environment:
+      ID: "${ID:-1}"
       IP: "${IP:-127.0.0.1}"
       DOMAIN: "${DOMAIN:-example.com}"
     ports:

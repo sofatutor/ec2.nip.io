@@ -19,6 +19,7 @@ import sys
 import re
 import os
 import ConfigParser
+import struct
 
 DEBUG = 1
 
@@ -84,6 +85,7 @@ class DynamicBackend:
         self.domain = config.get('main', 'domain')
         self.ip_address = config.get('main', 'ipaddress')
         self.ttl = config.get('main', 'ttl')
+        self.whitelist = config.items('whitelist')
 
         for entry in config.items('nameservers'):
             if not entry[0].endswith(self.domain):
@@ -174,6 +176,12 @@ class DynamicBackend:
                 self.handle_self(qname)
                 return
 
+        if not self.check_ip_in_whitelist(ipaddress):
+            if DEBUG:
+                log('ip not allowed: %s' % ipaddress)
+            self.handle_self(qname)
+            return
+
         write('DATA', qname, 'IN', 'A', self.ttl, self.id, '%s.%s.%s.%s' % (ipaddress[0], ipaddress[1], ipaddress[2], ipaddress[3]))
         self.write_name_servers(qname)
         write('END')
@@ -204,6 +212,26 @@ class DynamicBackend:
         write('LOG', 'Unknown type: %s, domain: %s' % (qtype, qname))
         write('END')
 
+    def check_ip_address(self, ip_address):
+        ip = ipaddress.IPv4Address('.'.join(str(x) for x in ip_address))
+        for network_mask in self.whitelist:
+            if ip in ipaddress.ip_network(network_mask):
+                return True
+        return False
+
+    def ip_in_network(self, ip, network):
+        ip_int = [int(x) for x in ip]
+        ip_bin = struct.unpack('!I', struct.pack('!4B', *ip_int))[0]
+        network_address, subnet_mask = network.split('/')
+        network_address_bin = struct.unpack('!I', struct.pack('!4B', *map(int, network_address.split('.'))))[0]
+        subnet_mask_bin = (0xffffffff << (32 - int(subnet_mask))) & 0xffffffff
+        return (ip_bin & subnet_mask_bin) == (network_address_bin & subnet_mask_bin)
+
+    def check_ip_in_whitelist(self, ip):
+        for net in self.whitelist:
+            if self.ip_in_network(ip, net[1]):
+                return True
+        return False
 
 if __name__ == '__main__':
     backend = DynamicBackend()
