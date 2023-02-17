@@ -20,7 +20,7 @@ import re
 import os
 import ConfigParser
 
-DEBUG = 0
+DEBUG = 1
 
 
 def log(msg):
