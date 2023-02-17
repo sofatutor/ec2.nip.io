@@ -2,10 +2,10 @@ FROM bitnami/minideb:latest
 
 RUN install_packages python pdns-server pdns-backend-pipe curl jq gettext
 
-# prepare config
-ARG DOMAIN=${DOMAIN:-example.com}
-ARG IP=${IP:-127.0.0.1}
 ARG ID=${ID:-1}
+ARG IP=${IP:-127.0.0.1}
+ARG DOMAIN=${DOMAIN:-example.com}
+
 ADD src/backend.conf.example /var/
 ADD src/nip.py /usr/local/bin/nip
 ADD docker/pdns.conf /etc/pdns/pdns.conf
