@@ -10,17 +10,12 @@ on:
 jobs:
   deploy:
     env:
-      DNS: 'p.sofatutor-sandbox.de'
+      DNS: ${{ env.DNS || 'p.sofatutor-sandbox.de' }}
     runs-on: ubuntu-22.04
     if: github.event_name == 'push' || github.event.label.name == 'preview' || contains(github.event.pull_request.labels.*.name, 'preview')
     timeout-minutes: 20
 
     steps:
-      - name: Set environment for branch
-        run: |
-          if [[ $GITHUB_REF == 'refs/heads/sofatutor' ]]; then
-            echo "DNS=previews.sofatutor.de" >> "$GITHUB_ENV"
-          fi
       - uses: actions/checkout@v2
       - uses: sofatutor/pullpreview@sofatutor
         with:
