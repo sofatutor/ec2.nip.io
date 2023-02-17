@@ -28,7 +28,7 @@ ns1.$DOMAIN=$IP
 
 [additional_cnames]
 _acme-challenge=xyz.auth.$DOMAIN.
-www=www.$DOMAIN
+www=www.$DOMAIN.
 
 [whitelist]
 loopback = 127.0.0.0/8
