@@ -1,21 +1,21 @@
 [main]
 # main domain
-domain=p.sofatutor-sandbox.de
+domain=$DOMAIN
 
 # default ttl
 ttl=432000
 
 # default IP address for non-wildcard entries
-ipaddress=3.71.243.88
+ipaddress=$IP
 
 # SOA
 [soa]
 # serial number
 id=1
 # Hostmaster email address
-hostmaster=hostmaster@p.sofatutor-sandbox.de
+hostmaster=hostmaster@$DOMAIN
 # Name server
-ns=ns1.p.sofatutor-sandbox.de
+ns=ns1.$DOMAIN
 refresh=10800
 retry=3600
 expire=604800
@@ -23,12 +23,12 @@ minimum=3600
 
 # nameservers
 [nameservers]
-ns1.p.sofatutor-sandbox.de=3.71.243.88
-ns2.p.sofatutor-sandbox.de=3.71.243.88
+ns1.$DOMAIN=$IP
+# ns2.$DOMAIN=$IP_2
 
 [additional_cnames]
-_acme-challenge=xyz.auth.p.sofatutor-sandbox.de.
-www=www.p.sofatutor-sandbox.de
+_acme-challenge=xyz.auth.$DOMAIN.
+www=www.$DOMAIN
 
 [whitelist]
 loopback = 127.0.0.0/8
