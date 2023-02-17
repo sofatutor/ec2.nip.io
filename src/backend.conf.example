@@ -11,11 +11,11 @@ ipaddress=$IP
 # SOA
 [soa]
 # serial number
-id=1
+id=$ID
 # Hostmaster email address
 hostmaster=hostmaster@$DOMAIN
 # Name server
-ns=$NS.$DOMAIN
+ns=ns$ID.$DOMAIN
 refresh=10800
 retry=3600
 expire=604800
@@ -23,7 +23,7 @@ minimum=3600
 
 # nameservers
 [nameservers]
-$NS.$DOMAIN=$IP
+ns$ID.$DOMAIN=$IP
 
 [additional_cnames]
 _acme-challenge=xyz.auth.$DOMAIN.

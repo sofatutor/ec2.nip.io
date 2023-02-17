@@ -9,7 +9,7 @@ services:
     environment:
       IP: "${IP:-127.0.0.1}"
       DOMAIN: "${DOMAIN:-example.com}"
-      NS: "${NS:-ns1}"
+      ID: "${ID:-1}"
     ports:
     - "53:53/udp"
     - "53:53/tcp"
