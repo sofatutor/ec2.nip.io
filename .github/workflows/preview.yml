@@ -24,8 +24,7 @@ jobs:
           registries: docker://index.docker.io/v1
           compose_files: docker-compose.yml
         env:
-          DOMAIN: p.sofatutor-sandbox.de
           AWS_REGION: eu-central-1
-          PULLPREVIEW_LAUNCH_COMMAND: IP="$(ec2-metadata | grep public-ipv4 | cut -d ' ' -f2)" DOMAIN=$DOMAIN docker-compose up -d --build --force-recreate
+          PULLPREVIEW_LAUNCH_COMMAND: IP="$(ec2-metadata | grep public-ipv4 | cut -d ' ' -f2)" DOMAIN=p.sofatutor-sandbox.de docker-compose up -d --build --force-recreate
           AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
           AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
