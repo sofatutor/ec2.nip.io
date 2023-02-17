@@ -15,7 +15,7 @@ id=1
 # Hostmaster email address
 hostmaster=hostmaster@$DOMAIN
 # Name server
-ns=ns1.$DOMAIN
+ns=$NS.$DOMAIN
 refresh=10800
 retry=3600
 expire=604800
@@ -23,8 +23,7 @@ minimum=3600
 
 # nameservers
 [nameservers]
-ns1.$DOMAIN=$IP
-# ns2.$DOMAIN=$IP_2
+$NS.$DOMAIN=$IP
 
 [additional_cnames]
 _acme-challenge=xyz.auth.$DOMAIN.
