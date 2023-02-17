@@ -199,7 +199,7 @@ resource "aws_ecs_task_definition" "nip_io_task_definition" {
   ])
 
   cpu             = 256
-  memory          = 1024
+  memory          = 512
 
   requires_compatibilities = [
     "FARGATE"
@@ -225,8 +225,9 @@ resource "aws_ecs_service" "nip_io_service" {
   }
 
   network_configuration {
-    security_groups = [aws_security_group.nip_io_sg.id]
-    subnets         = aws_subnet.nip_io_subnet_a.*.id
+    assign_public_ip = true
+    security_groups  = [aws_security_group.nip_io_sg.id]
+    subnets          = aws_subnet.nip_io_subnet_a.*.id
   }
 }
 
