@@ -4,4 +4,5 @@
 .idea
 .DS_Store
 build
-terraform/.terraform*
+.deploy/terraform/.terraform*
+.deploy/terraform/terraform.tfstate*
