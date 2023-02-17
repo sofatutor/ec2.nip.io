@@ -9,13 +9,13 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-22.04
-    if: github.event_name == 'push' || github.event.label.name == 'pullpreview' || contains(github.event.pull_request.labels.*.name, 'pullpreview')
+    if: github.event_name == 'push' || github.event.label.name == 'preview' || contains(github.event.pull_request.labels.*.name, 'preview')
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v2
       - uses: sofatutor/pullpreview@sofatutor
         with:
-          admins: mfittko,AmujoDotun
+          admins: mfittko
           always_on: master
           app_path: .
           instance_type: nano_2_0
