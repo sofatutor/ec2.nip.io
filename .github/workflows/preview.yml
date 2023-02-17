@@ -7,10 +7,11 @@ on:
   pull_request:
     types: [labeled, unlabeled, synchronize, closed, reopened]
 
+env:
+  DNS: 'p.sofatutor-sandbox.de'
+
 jobs:
   deploy:
-    env:
-      DNS: 'p.sofatutor-sandbox.de'
     runs-on: ubuntu-22.04
     if: github.event_name == 'push' || github.event.label.name == 'preview' || contains(github.event.pull_request.labels.*.name, 'preview')
     timeout-minutes: 10
@@ -18,7 +19,9 @@ jobs:
     steps:
       - name: Optionally override DNS
         run: |
-          echo "DNS=${SOFATUTOR_DNS-$DNS}" >> "$GITHUB_ENV"
+          if [[ $GITHUB_REF == 'refs/heads/sofatutor' && -n "$SOFATUTOR_DNS" ]]; then
+            echo "DNS=${SOFATUTOR_DNS-$DNS}" >> "$GITHUB_ENV"
+          fi
       - uses: actions/checkout@v2
       - uses: sofatutor/pullpreview@sofatutor
         with:
