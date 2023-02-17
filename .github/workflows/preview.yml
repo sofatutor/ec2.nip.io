@@ -13,7 +13,7 @@ jobs:
       DNS: 'p.sofatutor-sandbox.de'
     runs-on: ubuntu-22.04
     if: github.event_name == 'push' || github.event.label.name == 'preview' || contains(github.event.pull_request.labels.*.name, 'preview')
-    timeout-minutes: 20
+    timeout-minutes: 10
 
     steps:
       - name: Set environment for branch
