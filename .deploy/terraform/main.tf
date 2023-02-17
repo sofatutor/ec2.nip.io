@@ -187,12 +187,26 @@ resource "aws_ecs_task_definition" "nip_io_task_definition" {
   family                   = "nip-io-task"
   container_definitions    = jsonencode([
     {
-      name            = "my-container"
-      image           = "nginx:latest"
+      name            = "nip-io"
+      image           = "ghcr.io/sofatutor/nip-io:master"
+      environment    = [
+        {
+          "name": "IP",
+          "value": "$(curl http://169.254.169.254/latest/meta-data/network/interfaces/macs/$(curl http://169.254.169.254/latest/meta-data/mac)/public-ipv4s)"
+        },
+        {
+          "name": "DOMAIN",
+          "value": "p.sofatutor-sandbox.de"
+        }
+      ]
       portMappings    = [
         {
-          containerPort = 80
+          containerPort = 53
           protocol      = "tcp"
+        },
+        {
+          containerPort = 53
+          protocol      = "udp"
         }
       ]
     }
