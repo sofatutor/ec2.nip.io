@@ -19,8 +19,9 @@ jobs:
     steps:
       - name: Optionally override DNS
         run: |
+          SOFATUTOR_DNS="${{ vars.SOFATUTOR_DNS }}"
           if [[ $GITHUB_REF == 'refs/heads/sofatutor' && -n "$SOFATUTOR_DNS" ]]; then
-            echo "DNS=${SOFATUTOR_DNS-$DNS}" >> "$GITHUB_ENV"
+            echo "DNS=$SOFATUTOR_DNS" >> "$GITHUB_ENV"
           fi
       - uses: actions/checkout@v2
       - uses: sofatutor/pullpreview@sofatutor
