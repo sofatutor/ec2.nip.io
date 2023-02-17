@@ -1,13 +1,13 @@
 version: '3.6'
 
 services:
-  ntpio:
-    container_name: ntpio
+  nipio:
+    container_name: nipio
     build:
       context: .
-      args:
-        IP: "${IP}"
-        DOMAIN: "${DOMAIN}"
+    environment:
+      IP: "${IP:-127.0.0.1}"
+      DOMAIN: "${DOMAIN:-example.com}"
     ports:
     - "53:53/udp"
     - "53:53/tcp"
