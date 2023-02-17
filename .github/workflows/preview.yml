@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      - sofatutor
   pull_request:
     types: [labeled, unlabeled, synchronize, closed, reopened]
 
@@ -12,13 +13,19 @@ jobs:
       DNS: 'p.sofatutor-sandbox.de'
     runs-on: ubuntu-22.04
     if: github.event_name == 'push' || github.event.label.name == 'preview' || contains(github.event.pull_request.labels.*.name, 'preview')
-    timeout-minutes: 20
+    timeout-minutes: 10
+
     steps:
+      - name: Set environment for branch
+        run: |
+          if [[ $GITHUB_REF == 'refs/heads/sofatutor' ]]; then
+            echo "DNS=previews.sofatutor.de" >> "$GITHUB_ENV"
+          fi
       - uses: actions/checkout@v2
       - uses: sofatutor/pullpreview@sofatutor
         with:
           admins: mfittko
-          always_on: master
+          always_on: master,sofatutor
           app_path: .
           instance_type: nano_2_0
           dns: ${{env.DNS}}
@@ -27,6 +34,7 @@ jobs:
           compose_files: docker-compose.yml
         env:
           AWS_REGION: eu-central-1
-          PULLPREVIEW_LAUNCH_COMMAND: IP="$(ec2-metadata | grep public-ipv4 | cut -d ' ' -f2)" DOMAIN=${{env.DNS}} docker-compose up -d --build --force-recreate
+          PULLPREVIEW_ENV_VARS: IP="$(ec2-metadata | grep public-ipv4 | cut -d ' ' -f2)",DOMAIN=${{ env.DNS }}
+          PULLPREVIEW_LAUNCH_COMMAND: docker-compose up -d --build --force-recreate
           AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
           AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
