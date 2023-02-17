@@ -18,7 +18,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: resmo/nip-io
+  IMAGE_NAME: ${{ github.event.repository.owner.name }}/nip-io
 
 jobs:
   build-and-push-image:
