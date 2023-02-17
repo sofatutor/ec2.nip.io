@@ -5,6 +5,7 @@ services:
     container_name: nipio
     build:
       context: .
+    restart: always
     environment:
       IP: "${IP:-127.0.0.1}"
       DOMAIN: "${DOMAIN:-example.com}"
