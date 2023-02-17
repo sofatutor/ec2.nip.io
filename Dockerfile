@@ -14,4 +14,5 @@ EXPOSE 53/udp 53/tcp
 
 COPY src/entrypoint.sh /usr/local/bin/entrypoint
 RUN chmod +x /usr/local/bin/entrypoint
-CMD "entrypoint"
+ENTRYPOINT ["entrypoint"]
+CMD ["pdns_server", "--master", "--daemon=no", "--local-address=0.0.0.0", "--config-dir=/etc/pdns/"]
