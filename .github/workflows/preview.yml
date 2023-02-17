@@ -16,10 +16,10 @@ jobs:
     timeout-minutes: 10
 
     steps:
-      - name: Set environment for branch
+      - name: Optionally override DNS
         run: |
-          if [[ $GITHUB_REF == 'refs/heads/sofatutor' ]]; then
-            echo "DNS=previews.sofatutor.de" >> "$GITHUB_ENV"
+          if [[ $GITHUB_REF == 'refs/heads/sofatutor' && -n "$SOFATUTOR_DNS" ]]; then
+            echo "DNS=$SOFATUTOR_DNS" >> "$GITHUB_ENV"
           fi
       - uses: actions/checkout@v2
       - uses: sofatutor/pullpreview@sofatutor
