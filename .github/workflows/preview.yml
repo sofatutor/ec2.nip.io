@@ -27,7 +27,7 @@ jobs:
             echo "DNS=$SOFATUTOR_DNS" >> "$GITHUB_ENV"
           fi
       - uses: actions/checkout@v2
-      - uses: sofatutor/pullpreview@sofatutor
+      - uses: sofatutor/pullpreview@sofatutor-tar-upload
         with:
           admins: mfittko
           always_on: master,sofatutor,ns1.previews.sofatutor.net,ns2.previews.sofatutor.net
