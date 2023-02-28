@@ -30,7 +30,7 @@ jobs:
       - uses: sofatutor/pullpreview@sofatutor
         with:
           admins: mfittko
-          always_on: master,sofatutor
+          always_on: master,sofatutor,ns1.previews.sofatutor.net,ns2.previews.sofatutor.net
           app_path: .
           instance_type: nano_2_0
           dns: ${{env.DNS}}
