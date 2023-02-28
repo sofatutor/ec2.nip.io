@@ -10,8 +10,8 @@ on:
     types: [labeled, unlabeled, synchronize, closed, reopened]
 
 env:
-  DNS: 'ns2.previews.sofatutor.net'
-  ID: '1'
+  DNS: 'previews.sofatutor.net'
+  ID: '2'
 
 jobs:
   deploy:
