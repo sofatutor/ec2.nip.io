@@ -4,12 +4,12 @@ on:
     branches:
       - master
       - sofatutor
-      - ns1.previews.sofatutor.net
+      - ns1.previews.sofatutor.us
   pull_request:
     types: [labeled, unlabeled, synchronize, closed, reopened]
 
 env:
-  DNS: 'ns1.previews.sofatutor.net'
+  DNS: 'ns1.previews.sofatutor.us'
   ID: '1'
 
 jobs:
@@ -29,7 +29,7 @@ jobs:
       - uses: sofatutor/pullpreview@sofatutor
         with:
           admins: mfittko
-          always_on: master,sofatutor,ns1.previews.sofatutor.net
+          always_on: master,sofatutor,ns1.previews.sofatutor.us
           app_path: .
           instance_type: nano_2_0
           dns: ${{env.DNS}}
