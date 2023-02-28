@@ -9,7 +9,7 @@ on:
     types: [labeled, unlabeled, synchronize, closed, reopened]
 
 env:
-  DNS: 'ns1.previews.sofatutor.net'
+  DNS: 'previews.sofatutor.net'
   ID: '1'
 
 jobs:
