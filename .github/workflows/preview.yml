@@ -5,11 +5,12 @@ on:
       - master
       - sofatutor
       - ns1.previews.sofatutor.net
+      - ns2.previews.sofatutor.net
   pull_request:
     types: [labeled, unlabeled, synchronize, closed, reopened]
 
 env:
-  DNS: 'ns1.previews.sofatutor.net'
+  DNS: 'ns2.previews.sofatutor.net'
   ID: '1'
 
 jobs:
