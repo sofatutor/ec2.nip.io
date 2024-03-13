@@ -1,4 +1,4 @@
-FROM bitnami/minideb:latest
+FROM bitnami/minideb:bullseye-amd64
 
 RUN install_packages python pdns-server pdns-backend-pipe curl jq gettext
 
