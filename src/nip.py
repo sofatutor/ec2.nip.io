@@ -21,7 +21,7 @@ import os
 import ConfigParser
 import struct
 
-DEBUG = 1
+DEBUG = 0
 
 
 def log(msg):
